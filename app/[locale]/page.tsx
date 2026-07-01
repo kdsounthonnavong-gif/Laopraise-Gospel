@@ -44,7 +44,7 @@ export default async function HomePage({
   return (
     <div className="min-h-screen bg-amber-50">
       {/* Hero Section */}
-      <div className="relative h-72 sm:h-96 overflow-hidden">
+      <div className="relative h-screen overflow-hidden">
         <Image
           src="/images/Background.jpg"
           alt="Laopraise"
@@ -58,9 +58,9 @@ export default async function HomePage({
           <span className="font-bold text-amber-900 text-lg drop-shadow-sm">Laopraise</span>
           <LanguageSwitcher currentLocale={locale} />
         </div>
-        {/* bottom gradient + content */}
-        <div className="absolute inset-0 bg-gradient-to-t from-amber-50 via-amber-50/30 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 px-4 pb-6 flex flex-col items-center text-center gap-3">
+        {/* overlay + content */}
+        <div className="absolute inset-0 bg-gradient-to-t from-amber-50/95 via-white/10 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 px-4 pb-16 flex flex-col items-center text-center gap-3">
           <h1 className="text-2xl font-bold text-amber-900 drop-shadow-sm">{t('hero_title')}</h1>
           <p className="text-amber-700 text-sm drop-shadow-sm">{t('hero_sub')}</p>
           <form method="GET" className="w-full max-w-sm">
