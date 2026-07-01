@@ -46,7 +46,7 @@ export default async function HomePage({
       {/* Hero Section */}
       <div className="relative h-72 sm:h-96 overflow-hidden">
         <Image
-          src="/hero-bg.jpg"
+          src="/images/Background.jpg"
           alt="Laopraise"
           fill
           className="object-cover object-center"
