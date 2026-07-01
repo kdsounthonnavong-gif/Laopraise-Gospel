@@ -9,6 +9,15 @@ import type { Song, Category } from '@/lib/supabase/types'
 
 type SongRow = Song & { categories: Category | null }
 
+const CAT_COLORS = [
+  'from-amber-400 to-orange-500',
+  'from-emerald-400 to-teal-500',
+  'from-sky-400 to-blue-500',
+  'from-purple-400 to-violet-500',
+  'from-rose-400 to-pink-500',
+  'from-lime-400 to-green-500',
+]
+
 export default async function HomePage({
   params: { locale },
   searchParams,
@@ -42,8 +51,9 @@ export default async function HomePage({
     .order('sort_order')
 
   return (
-    <div className="min-h-screen bg-amber-50">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-stone-50">
+
+      {/* ── HERO ── */}
       <div className="relative h-screen overflow-hidden">
         <Image
           src="/images/Background.jpg"
@@ -53,48 +63,86 @@ export default async function HomePage({
           className="object-cover object-center"
           priority
         />
-        {/* top nav overlay */}
-        <div className="absolute inset-x-0 top-0 z-10 px-4 py-3 flex items-center justify-between bg-gradient-to-b from-white/60 to-transparent">
-          <span className="font-bold text-amber-900 text-lg drop-shadow-sm">Laopraise</span>
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-white/5 to-stone-50" />
+
+        {/* NAV */}
+        <nav className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-5 py-4">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-amber-900/85 backdrop-blur-sm flex items-center justify-center shadow-lg">
+              <span className="text-white text-base">🎵</span>
+            </div>
+            <span className="font-bold text-amber-950 text-lg tracking-tight" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>
+              Laopraise
+            </span>
+          </div>
           <LanguageSwitcher currentLocale={locale} />
-        </div>
-        {/* overlay + content */}
-        <div className="absolute inset-0 bg-gradient-to-t from-amber-50/95 via-white/10 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 px-4 pb-16 flex flex-col items-center text-center gap-3">
-          <h1 className="text-2xl font-bold text-amber-900 drop-shadow-sm">{t('hero_title')}</h1>
-          <p className="text-amber-700 text-sm drop-shadow-sm">{t('hero_sub')}</p>
-          <form method="GET" className="w-full max-w-sm">
-            <input
-              name="q"
-              defaultValue={query}
-              placeholder={t('search_placeholder')}
-              className="w-full px-4 py-3 rounded-2xl border border-amber-200 bg-white/90 backdrop-blur shadow-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm"
-            />
+        </nav>
+
+        {/* CENTER CONTENT */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center gap-6 pb-16">
+          <div className="space-y-3">
+            <h1
+              className="text-4xl sm:text-5xl font-bold text-amber-950 tracking-tight leading-tight"
+              style={{ textShadow: '0 2px 8px rgba(255,255,255,0.7)' }}
+            >
+              {t('hero_title')}
+            </h1>
+            <p
+              className="text-amber-800/75 text-sm sm:text-base italic max-w-xs mx-auto"
+              style={{ textShadow: '0 1px 4px rgba(255,255,255,0.6)' }}
+            >
+              &ldquo;I will sing of you among the peoples.&rdquo; — Ps 108:3
+            </p>
+          </div>
+
+          {/* Search bar */}
+          <form method="GET" className="w-full max-w-md">
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-amber-400 text-base pointer-events-none">🔍</span>
+              <input
+                name="q"
+                defaultValue={query}
+                placeholder={t('search_placeholder')}
+                className="w-full pl-11 pr-5 py-4 rounded-2xl bg-white/88 backdrop-blur-md border border-white/70 shadow-xl text-sm text-amber-900 placeholder:text-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white/95"
+              />
+            </div>
           </form>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-7 inset-x-0 flex flex-col items-center gap-1 animate-bounce">
+          <div className="w-5 h-8 rounded-full border-2 border-amber-800/30 flex items-start justify-center pt-1">
+            <div className="w-1 h-2 rounded-full bg-amber-800/40" />
+          </div>
         </div>
       </div>
 
-      <div className="max-w-lg mx-auto px-4 py-6 space-y-8">
+      {/* ── CONTENT ── */}
+      <div className="max-w-2xl mx-auto px-4 py-10 space-y-10">
 
-        {/* Categories */}
+        {/* Categories — horizontal scroll */}
         {!query && categories && categories.length > 0 && (
           <section>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-bold text-amber-900">{t('section_categories')}</h2>
-              <Link href={`/${locale}/categories`} className="text-xs text-amber-600">{t('see_all')}</Link>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-amber-950">{t('section_categories')}</h2>
+              <Link href={`/${locale}/categories`} className="text-sm text-amber-600 font-medium hover:text-amber-800">
+                {t('see_all')} →
+              </Link>
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              {categories.slice(0, 6).map(cat => (
+            <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4" style={{ scrollbarWidth: 'none' }}>
+              {categories.map((cat, i) => (
                 <Link
                   key={cat.id}
                   href={`/${locale}/categories?cat=${cat.id}`}
-                  className="bg-white rounded-xl p-3 border border-amber-100 hover:border-amber-300 transition-colors"
+                  className={`flex-shrink-0 rounded-2xl p-4 bg-gradient-to-br ${CAT_COLORS[i % CAT_COLORS.length]} text-white min-w-[140px] hover:scale-[1.04] transition-transform shadow-md active:scale-95`}
                 >
-                  <p className="font-medium text-amber-900 text-sm truncate">
+                  <p className="font-semibold text-sm leading-snug">
                     {(cat.name as Record<string, string>)[locale] || (cat.name as Record<string, string>)['lo']}
                   </p>
-                  <p className="text-xs text-amber-500 mt-0.5">
-                    {t('songs_count', { count: (cat as { songs?: { count: number }[] }).songs?.[0]?.count ?? 0 })}
+                  <p className="text-white/70 text-xs mt-1.5">
+                    {(cat as { songs?: { count: number }[] }).songs?.[0]?.count ?? 0} ເພງ
                   </p>
                 </Link>
               ))}
@@ -102,21 +150,24 @@ export default async function HomePage({
           </section>
         )}
 
-        {/* Songs grid */}
+        {/* Songs list */}
         <section>
-          <h2 className="font-bold text-amber-900 mb-3">
-            {query ? `🔍 "${query}"` : t('section_latest')}
+          <h2 className="text-lg font-bold text-amber-950 mb-4">
+            {query ? `🔍 &ldquo;${query}&rdquo;` : t('section_latest')}
           </h2>
           {songs && songs.length > 0 ? (
-            <div className="grid grid-cols-1 gap-3">
+            <div className="flex flex-col gap-3">
               {songs.map(song => (
                 <SongCard key={song.id} song={song as unknown as SongRow} locale={locale} />
               ))}
             </div>
           ) : (
-            <p className="text-center text-amber-500 py-8 text-sm">
-              {query ? 'ບໍ່ພົບເພງ / ไม่พบเพลง / Song not found' : 'ຍັງບໍ່ມີເພງ'}
-            </p>
+            <div className="text-center py-16">
+              <p className="text-4xl mb-3">🎵</p>
+              <p className="text-amber-400 text-sm">
+                {query ? 'ບໍ່ພົບເພງ / ไม่พบเพลง / Song not found' : 'ຍັງບໍ່ມີເພງ'}
+              </p>
+            </div>
           )}
         </section>
       </div>
