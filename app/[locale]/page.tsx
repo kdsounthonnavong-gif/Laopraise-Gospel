@@ -9,13 +9,13 @@ import type { Song, Category } from '@/lib/supabase/types'
 
 type SongRow = Song & { categories: Category | null }
 
-const CAT_COLORS = [
-  'from-amber-400 to-orange-500',
-  'from-emerald-400 to-teal-500',
-  'from-sky-400 to-blue-500',
-  'from-purple-400 to-violet-500',
-  'from-rose-400 to-pink-500',
-  'from-lime-400 to-green-500',
+const CAT_ITEMS = [
+  { grad: 'from-amber-400 to-orange-500', shadow: 'shadow-orange-500/30', icon: '🙏' },
+  { grad: 'from-emerald-400 to-teal-500', shadow: 'shadow-teal-500/30',   icon: '🎶' },
+  { grad: 'from-sky-400 to-blue-500',     shadow: 'shadow-blue-500/30',   icon: '⭐' },
+  { grad: 'from-violet-400 to-purple-600',shadow: 'shadow-purple-600/30', icon: '💧' },
+  { grad: 'from-rose-400 to-pink-600',    shadow: 'shadow-pink-600/30',   icon: '🕊️' },
+  { grad: 'from-lime-400 to-green-500',   shadow: 'shadow-green-500/30',  icon: '🌿' },
 ]
 
 export default async function HomePage({
@@ -51,7 +51,7 @@ export default async function HomePage({
     .order('sort_order')
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-[#0A0400]">
 
       {/* ── HERO ── */}
       <div className="relative h-screen overflow-hidden">
@@ -63,17 +63,16 @@ export default async function HomePage({
           className="object-cover object-center"
           priority
         />
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-white/5 to-stone-50" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-[#0A0400]" />
 
         {/* NAV */}
         <nav className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-5 py-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-900/85 backdrop-blur-sm flex items-center justify-center shadow-lg">
-              <span className="text-white text-base">🎵</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-800 flex items-center justify-center shadow-lg shadow-amber-900/50">
+              <span className="text-white text-lg">🎵</span>
             </div>
-            <span className="font-bold text-amber-950 text-lg tracking-tight" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>
+            <span className="font-bold text-amber-100 text-lg tracking-tight" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.5)' }}>
               Laopraise
             </span>
           </div>
@@ -83,38 +82,38 @@ export default async function HomePage({
         {/* CENTER CONTENT */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center gap-6 pb-16">
           <div className="space-y-3">
+            <p className="text-xs tracking-[0.2em] text-amber-400 font-semibold uppercase">
+              ✦ Gospel Song Library ✦
+            </p>
             <h1
-              className="text-4xl sm:text-5xl font-bold text-amber-950 tracking-tight leading-tight"
-              style={{ textShadow: '0 2px 8px rgba(255,255,255,0.7)' }}
+              className="text-4xl sm:text-5xl font-bold text-amber-50 tracking-tight leading-tight"
+              style={{ textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}
             >
               {t('hero_title')}
             </h1>
-            <p
-              className="text-amber-800/75 text-sm sm:text-base italic max-w-xs mx-auto"
-              style={{ textShadow: '0 1px 4px rgba(255,255,255,0.6)' }}
-            >
+            <p className="text-amber-200/60 text-sm sm:text-base italic max-w-xs mx-auto">
               &ldquo;I will sing of you among the peoples.&rdquo; — Ps 108:3
             </p>
           </div>
 
-          {/* Search bar */}
+          {/* Search — dark frosted */}
           <form method="GET" className="w-full max-w-md">
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-amber-400 text-base pointer-events-none">🔍</span>
+              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-amber-500/80 text-base pointer-events-none">🔍</span>
               <input
                 name="q"
                 defaultValue={query}
                 placeholder={t('search_placeholder')}
-                className="w-full pl-11 pr-5 py-4 rounded-2xl bg-white/88 backdrop-blur-md border border-white/70 shadow-xl text-sm text-amber-900 placeholder:text-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white/95"
+                className="w-full pl-12 pr-5 py-4 rounded-3xl bg-black/35 backdrop-blur-xl border border-white/15 text-amber-50 placeholder:text-amber-400/50 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500/40 shadow-2xl"
               />
             </div>
           </form>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-7 inset-x-0 flex flex-col items-center gap-1 animate-bounce">
-          <div className="w-5 h-8 rounded-full border-2 border-amber-800/30 flex items-start justify-center pt-1">
-            <div className="w-1 h-2 rounded-full bg-amber-800/40" />
+        <div className="absolute bottom-6 inset-x-0 flex justify-center animate-bounce">
+          <div className="w-5 h-8 rounded-full border-2 border-amber-500/35 flex items-start justify-center pt-1.5">
+            <div className="w-1 h-2.5 rounded-full bg-amber-500/45" />
           </div>
         </div>
       </div>
@@ -122,41 +121,47 @@ export default async function HomePage({
       {/* ── CONTENT ── */}
       <div className="max-w-2xl mx-auto px-4 py-10 space-y-10">
 
-        {/* Categories — horizontal scroll */}
+        {/* Categories */}
         {!query && categories && categories.length > 0 && (
           <section>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-amber-950">{t('section_categories')}</h2>
-              <Link href={`/${locale}/categories`} className="text-sm text-amber-600 font-medium hover:text-amber-800">
+              <h2 className="text-base font-bold text-amber-100">{t('section_categories')}</h2>
+              <Link href={`/${locale}/categories`} className="text-sm text-amber-500 font-semibold hover:text-amber-400">
                 {t('see_all')} →
               </Link>
             </div>
             <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4" style={{ scrollbarWidth: 'none' }}>
-              {categories.map((cat, i) => (
-                <Link
-                  key={cat.id}
-                  href={`/${locale}/categories?cat=${cat.id}`}
-                  className={`flex-shrink-0 rounded-2xl p-4 bg-gradient-to-br ${CAT_COLORS[i % CAT_COLORS.length]} text-white min-w-[140px] hover:scale-[1.04] transition-transform shadow-md active:scale-95`}
-                >
-                  <p className="font-semibold text-sm leading-snug">
-                    {(cat.name as Record<string, string>)[locale] || (cat.name as Record<string, string>)['lo']}
-                  </p>
-                  <p className="text-white/70 text-xs mt-1.5">
-                    {(cat as { songs?: { count: number }[] }).songs?.[0]?.count ?? 0} ເພງ
-                  </p>
-                </Link>
-              ))}
+              {categories.map((cat, i) => {
+                const item = CAT_ITEMS[i % CAT_ITEMS.length]
+                return (
+                  <Link
+                    key={cat.id}
+                    href={`/${locale}/categories?cat=${cat.id}`}
+                    className="flex-shrink-0 rounded-2xl p-4 bg-[#1A0A00] border border-amber-500/[0.12] min-w-[130px] hover:border-amber-500/40 hover:bg-[#221000] transition-all active:scale-95"
+                  >
+                    <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${item.grad} flex items-center justify-center text-sm mb-3 shadow-lg ${item.shadow}`}>
+                      {item.icon}
+                    </div>
+                    <p className="font-semibold text-amber-100 text-sm leading-snug">
+                      {(cat.name as Record<string, string>)[locale] || (cat.name as Record<string, string>)['lo']}
+                    </p>
+                    <p className="text-amber-600/70 text-xs mt-1">
+                      {(cat as { songs?: { count: number }[] }).songs?.[0]?.count ?? 0} ເພງ
+                    </p>
+                  </Link>
+                )
+              })}
             </div>
           </section>
         )}
 
-        {/* Songs list */}
+        {/* Songs */}
         <section>
-          <h2 className="text-lg font-bold text-amber-950 mb-4">
-            {query ? `🔍 &ldquo;${query}&rdquo;` : t('section_latest')}
+          <h2 className="text-base font-bold text-amber-100 mb-4">
+            {query ? `🔍 "${query}"` : t('section_latest')}
           </h2>
           {songs && songs.length > 0 ? (
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2.5">
               {songs.map(song => (
                 <SongCard key={song.id} song={song as unknown as SongRow} locale={locale} />
               ))}
@@ -164,12 +169,17 @@ export default async function HomePage({
           ) : (
             <div className="text-center py-16">
               <p className="text-4xl mb-3">🎵</p>
-              <p className="text-amber-400 text-sm">
-                {query ? 'ບໍ່ພົບເພງ / ไม่พบเพลง / Song not found' : 'ຍັງບໍ່ມີເພງ'}
+              <p className="text-amber-700 text-sm">
+                {query ? 'ບໍ່ພົບເພງ / Song not found' : 'ຍັງບໍ່ມີເພງ'}
               </p>
             </div>
           )}
         </section>
+
+        {/* Footer */}
+        <div className="text-center pt-6 border-t border-white/[0.05]">
+          <p className="text-amber-800/50 text-xs tracking-widest uppercase">Laopraise Gospel Library</p>
+        </div>
       </div>
     </div>
   )
