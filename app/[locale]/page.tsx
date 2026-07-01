@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { SongCard } from '@/components/SongCard'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { AppLocale } from '@/i18n'
 import type { Song, Category } from '@/lib/supabase/types'
 
@@ -41,28 +42,38 @@ export default async function HomePage({
     .order('sort_order')
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-amber-100/50">
-      <nav className="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-amber-100 px-4 py-3 flex items-center justify-between">
-        <Link href={`/${locale}`} className="font-bold text-amber-900 text-lg">
-          🎵 Laopraise
-        </Link>
-        <LanguageSwitcher currentLocale={locale} />
-      </nav>
-
-      <div className="max-w-lg mx-auto px-4 py-6 space-y-8">
-        {/* Hero + Search */}
-        <div className="text-center space-y-4">
-          <h1 className="text-2xl font-bold text-amber-900">{t('hero_title')}</h1>
-          <p className="text-amber-600 text-sm">{t('hero_sub')}</p>
-          <form method="GET">
+    <div className="min-h-screen bg-amber-50">
+      {/* Hero Section */}
+      <div className="relative h-72 sm:h-96 overflow-hidden">
+        <Image
+          src="/hero-bg.jpg"
+          alt="Laopraise"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+        {/* top nav overlay */}
+        <div className="absolute inset-x-0 top-0 z-10 px-4 py-3 flex items-center justify-between bg-gradient-to-b from-white/60 to-transparent">
+          <span className="font-bold text-amber-900 text-lg drop-shadow-sm">Laopraise</span>
+          <LanguageSwitcher currentLocale={locale} />
+        </div>
+        {/* bottom gradient + content */}
+        <div className="absolute inset-0 bg-gradient-to-t from-amber-50 via-amber-50/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 px-4 pb-6 flex flex-col items-center text-center gap-3">
+          <h1 className="text-2xl font-bold text-amber-900 drop-shadow-sm">{t('hero_title')}</h1>
+          <p className="text-amber-700 text-sm drop-shadow-sm">{t('hero_sub')}</p>
+          <form method="GET" className="w-full max-w-sm">
             <input
               name="q"
               defaultValue={query}
               placeholder={t('search_placeholder')}
-              className="w-full px-4 py-3 rounded-2xl border border-amber-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm"
+              className="w-full px-4 py-3 rounded-2xl border border-amber-200 bg-white/90 backdrop-blur shadow-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm"
             />
           </form>
         </div>
+      </div>
+
+      <div className="max-w-lg mx-auto px-4 py-6 space-y-8">
 
         {/* Categories */}
         {!query && categories && categories.length > 0 && (
