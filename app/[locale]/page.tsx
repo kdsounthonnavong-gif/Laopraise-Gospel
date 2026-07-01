@@ -49,6 +49,7 @@ export default async function HomePage({
           src="/images/Background.jpg"
           alt="Laopraise"
           fill
+          sizes="100vw"
           className="object-cover object-center"
           priority
         />
