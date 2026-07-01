@@ -2,6 +2,13 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
+  const isAdminRoute = /\/[a-z]{2}\/admin/.test(request.nextUrl.pathname)
+
+  // Only check auth for admin routes — skip Supabase call for public pages
+  if (!isAdminRoute) {
+    return NextResponse.next({ request })
+  }
+
   let response = NextResponse.next({ request })
 
   const supabase = createServerClient(
@@ -21,8 +28,7 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  const isAdminRoute = /\/[a-z]{2}\/admin/.test(request.nextUrl.pathname)
-  if (isAdminRoute && !user) {
+  if (!user) {
     const loginUrl = new URL('/lo/auth/login', request.url)
     loginUrl.searchParams.set('redirectTo', request.nextUrl.pathname)
     return NextResponse.redirect(loginUrl)
