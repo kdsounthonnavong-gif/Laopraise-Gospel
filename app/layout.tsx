@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Noto_Sans_Lao } from "next/font/google";
 import "./globals.css";
+
+const notoSansLao = Noto_Sans_Lao({
+  subsets: ["lao"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-noto-lao",
+  display: "swap",
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-amber-50`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${notoSansLao.variable} antialiased min-h-screen bg-[#F8FAFB]`}>
         {children}
       </body>
     </html>

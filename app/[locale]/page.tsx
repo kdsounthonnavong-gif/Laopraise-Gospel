@@ -95,7 +95,7 @@ export default async function HomePage({
             </p>
             <h1
               className="text-4xl sm:text-5xl font-bold text-sky-950 tracking-tight leading-tight"
-              style={{ textShadow: '0 2px 12px rgba(255,255,255,0.9)' }}
+              style={{ fontFamily: 'var(--font-noto-lao), sans-serif', textShadow: '0 2px 12px rgba(255,255,255,0.9)' }}
             >
               {t('hero_title')}
             </h1>
