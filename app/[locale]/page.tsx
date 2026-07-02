@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { SongCard } from '@/components/SongCard'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import Link from 'next/link'
@@ -25,6 +25,7 @@ export default async function HomePage({
   params: { locale: AppLocale }
   searchParams: { q?: string }
 }) {
+  setRequestLocale(locale)
   const t        = await getTranslations()
   const supabase = createClient()
   const query    = searchParams.q?.trim() ?? ''
