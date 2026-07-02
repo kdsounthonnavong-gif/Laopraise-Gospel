@@ -10,12 +10,12 @@ import type { Song, Category } from '@/lib/supabase/types'
 type SongRow = Song & { categories: Category | null }
 
 const CAT_ITEMS = [
-  { grad: 'from-amber-400 to-orange-500', shadow: 'shadow-orange-500/30', icon: '🙏' },
-  { grad: 'from-emerald-400 to-teal-500', shadow: 'shadow-teal-500/30',   icon: '🎶' },
-  { grad: 'from-sky-400 to-blue-500',     shadow: 'shadow-blue-500/30',   icon: '⭐' },
-  { grad: 'from-violet-400 to-purple-600',shadow: 'shadow-purple-600/30', icon: '💧' },
-  { grad: 'from-rose-400 to-pink-600',    shadow: 'shadow-pink-600/30',   icon: '🕊️' },
-  { grad: 'from-lime-400 to-green-500',   shadow: 'shadow-green-500/30',  icon: '🌿' },
+  { grad: 'from-amber-400 to-orange-500',   shadow: 'shadow-orange-400/25', icon: '🙏' },
+  { grad: 'from-emerald-400 to-teal-500',   shadow: 'shadow-teal-400/25',   icon: '🎶' },
+  { grad: 'from-sky-400 to-blue-500',       shadow: 'shadow-blue-400/25',   icon: '⭐' },
+  { grad: 'from-violet-400 to-purple-600',  shadow: 'shadow-purple-400/25', icon: '💧' },
+  { grad: 'from-rose-400 to-pink-600',      shadow: 'shadow-rose-400/25',   icon: '🕊️' },
+  { grad: 'from-lime-400 to-green-500',     shadow: 'shadow-green-400/25',  icon: '🌿' },
 ]
 
 export default async function HomePage({
@@ -51,9 +51,9 @@ export default async function HomePage({
     .order('sort_order')
 
   return (
-    <div className="min-h-screen bg-[#0A0400]">
+    <div className="min-h-screen bg-[#F8FAFB]">
 
-      {/* ── HERO ── */}
+      {/* ── HERO: Morning Glory ── */}
       <div className="relative h-screen overflow-hidden">
         <Image
           src="/images/Background.jpg"
@@ -63,48 +63,56 @@ export default async function HomePage({
           className="object-cover object-center"
           priority
         />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-[#0A0400]" />
+        {/* Minimal overlay — ภาพเห็นชัดทั้งหมด */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent via-60% to-[#F8FAFB]/75" />
 
         {/* NAV */}
         <nav className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-5 py-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-800 flex items-center justify-center shadow-lg shadow-amber-900/50">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center shadow-lg shadow-sky-400/35">
               <span className="text-white text-lg">🎵</span>
             </div>
-            <span className="font-bold text-amber-100 text-lg tracking-tight" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.5)' }}>
+            <span className="font-bold text-sky-950 text-lg tracking-tight" style={{ textShadow: '0 1px 6px rgba(255,255,255,0.9)' }}>
               Laopraise
             </span>
           </div>
-          <LanguageSwitcher currentLocale={locale} />
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher currentLocale={locale} />
+            <Link
+              href={`/${locale}/auth/login`}
+              className="px-4 py-2 rounded-2xl bg-gradient-to-r from-sky-400 to-blue-500 text-white text-sm font-semibold shadow-md shadow-sky-400/30 hover:shadow-sky-400/50 transition-shadow"
+            >
+              ເຂົ້າສູ່ລະບົບ
+            </Link>
+          </div>
         </nav>
 
         {/* CENTER CONTENT */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center gap-6 pb-16">
           <div className="space-y-3">
-            <p className="text-xs tracking-[0.2em] text-amber-400 font-semibold uppercase">
-              ✦ Gospel Song Library ✦
+            <p className="text-xs tracking-[0.18em] text-sky-500 font-semibold uppercase">
+              Gospel Song Library
             </p>
             <h1
-              className="text-4xl sm:text-5xl font-bold text-amber-50 tracking-tight leading-tight"
-              style={{ textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}
+              className="text-4xl sm:text-5xl font-bold text-sky-950 tracking-tight leading-tight"
+              style={{ textShadow: '0 2px 12px rgba(255,255,255,0.9)' }}
             >
               {t('hero_title')}
             </h1>
-            <p className="text-amber-200/60 text-sm sm:text-base italic max-w-xs mx-auto">
+            <p className="text-sky-900/50 text-sm sm:text-base italic max-w-xs mx-auto">
               &ldquo;I will sing of you among the peoples.&rdquo; — Ps 108:3
             </p>
           </div>
 
-          {/* Search — dark frosted */}
+          {/* Search */}
           <form method="GET" className="w-full max-w-md">
             <div className="relative">
-              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-amber-500/80 text-base pointer-events-none">🔍</span>
+              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-sky-300 text-base pointer-events-none">🔍</span>
               <input
                 name="q"
                 defaultValue={query}
                 placeholder={t('search_placeholder')}
-                className="w-full pl-12 pr-5 py-4 rounded-3xl bg-black/35 backdrop-blur-xl border border-white/15 text-amber-50 placeholder:text-amber-400/50 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500/40 shadow-2xl"
+                className="w-full pl-12 pr-5 py-4 rounded-3xl bg-white/82 backdrop-blur-xl border-[1.5px] border-sky-200/70 text-sky-950 placeholder:text-sky-400/60 text-sm shadow-xl shadow-sky-200/40 focus:outline-none focus:ring-2 focus:ring-sky-400/30 focus:border-sky-400"
               />
             </div>
           </form>
@@ -112,8 +120,8 @@ export default async function HomePage({
 
         {/* Scroll indicator */}
         <div className="absolute bottom-6 inset-x-0 flex justify-center animate-bounce">
-          <div className="w-5 h-8 rounded-full border-2 border-amber-500/35 flex items-start justify-center pt-1.5">
-            <div className="w-1 h-2.5 rounded-full bg-amber-500/45" />
+          <div className="w-5 h-8 rounded-full border-2 border-sky-400/35 flex items-start justify-center pt-1.5">
+            <div className="w-1 h-2.5 rounded-full bg-sky-400/45" />
           </div>
         </div>
       </div>
@@ -125,8 +133,8 @@ export default async function HomePage({
         {!query && categories && categories.length > 0 && (
           <section>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-bold text-amber-100">{t('section_categories')}</h2>
-              <Link href={`/${locale}/categories`} className="text-sm text-amber-500 font-semibold hover:text-amber-400">
+              <h2 className="text-base font-bold text-sky-950">{t('section_categories')}</h2>
+              <Link href={`/${locale}/categories`} className="text-sm text-sky-500 font-semibold hover:text-sky-700">
                 {t('see_all')} →
               </Link>
             </div>
@@ -137,15 +145,15 @@ export default async function HomePage({
                   <Link
                     key={cat.id}
                     href={`/${locale}/categories?cat=${cat.id}`}
-                    className="flex-shrink-0 rounded-2xl p-4 bg-[#1A0A00] border border-amber-500/[0.12] min-w-[130px] hover:border-amber-500/40 hover:bg-[#221000] transition-all active:scale-95"
+                    className="flex-shrink-0 rounded-2xl p-4 bg-white border-[1.5px] border-sky-100 min-w-[130px] hover:border-sky-300 hover:shadow-lg hover:shadow-sky-200/40 transition-all active:scale-95"
                   >
-                    <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${item.grad} flex items-center justify-center text-sm mb-3 shadow-lg ${item.shadow}`}>
+                    <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${item.grad} flex items-center justify-center text-sm mb-3 shadow-md ${item.shadow}`}>
                       {item.icon}
                     </div>
-                    <p className="font-semibold text-amber-100 text-sm leading-snug">
+                    <p className="font-semibold text-sky-950 text-sm leading-snug">
                       {(cat.name as Record<string, string>)[locale] || (cat.name as Record<string, string>)['lo']}
                     </p>
-                    <p className="text-amber-600/70 text-xs mt-1">
+                    <p className="text-sky-400 text-xs mt-1">
                       {(cat as { songs?: { count: number }[] }).songs?.[0]?.count ?? 0} ເພງ
                     </p>
                   </Link>
@@ -157,7 +165,7 @@ export default async function HomePage({
 
         {/* Songs */}
         <section>
-          <h2 className="text-base font-bold text-amber-100 mb-4">
+          <h2 className="text-base font-bold text-sky-950 mb-4">
             {query ? `🔍 "${query}"` : t('section_latest')}
           </h2>
           {songs && songs.length > 0 ? (
@@ -169,16 +177,15 @@ export default async function HomePage({
           ) : (
             <div className="text-center py-16">
               <p className="text-4xl mb-3">🎵</p>
-              <p className="text-amber-700 text-sm">
+              <p className="text-sky-400 text-sm">
                 {query ? 'ບໍ່ພົບເພງ / Song not found' : 'ຍັງບໍ່ມີເພງ'}
               </p>
             </div>
           )}
         </section>
 
-        {/* Footer */}
-        <div className="text-center pt-6 border-t border-white/[0.05]">
-          <p className="text-amber-800/50 text-xs tracking-widest uppercase">Laopraise Gospel Library</p>
+        <div className="text-center pt-6 border-t border-sky-100">
+          <p className="text-sky-300 text-xs tracking-widest uppercase">Laopraise Gospel Library</p>
         </div>
       </div>
     </div>
