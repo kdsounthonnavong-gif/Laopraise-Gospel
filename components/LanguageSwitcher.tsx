@@ -16,16 +16,21 @@ export function LanguageSwitcher({ currentLocale }: { currentLocale: AppLocale }
   }
 
   return (
-    <div className="flex gap-1">
+    <div style={{ display: 'flex', background: 'rgba(255,255,255,0.65)', border: '1px solid rgba(186,214,232,0.7)', borderRadius: 20, padding: 3, gap: 1, backdropFilter: 'blur(10px)' }}>
       {locales.map(l => (
         <button
           key={l}
           onClick={() => switchTo(l)}
-          className={`px-2 py-1 rounded-lg text-xs font-medium transition-colors ${
-            l === currentLocale
-              ? 'bg-amber-900 text-white'
-              : 'text-amber-700 hover:bg-amber-100'
-          }`}
+          style={l === currentLocale ? {
+            padding: '5px 11px', borderRadius: 16, fontSize: 11, fontWeight: 600,
+            border: 'none', cursor: 'pointer', fontFamily: 'sans-serif', color: 'white',
+            background: 'linear-gradient(135deg,#38BDF8,#0EA5E9)',
+            boxShadow: '0 1px 4px rgba(14,165,233,0.3)',
+          } : {
+            padding: '5px 11px', borderRadius: 16, fontSize: 11, fontWeight: 500,
+            border: 'none', cursor: 'pointer', fontFamily: 'sans-serif',
+            background: 'transparent', color: '#4A7A9B',
+          }}
         >
           {LABELS[l]}
         </button>
