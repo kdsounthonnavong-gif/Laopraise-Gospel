@@ -63,8 +63,8 @@ export default async function HomePage({
           className="object-cover object-center"
           priority
         />
-        {/* Minimal overlay — ภาพเห็นชัดทั้งหมด */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent via-60% to-[#F8FAFB]/75" />
+        {/* Overlay — fade เฉพาะส่วนล่างสุด */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent via-75% to-[#F8FAFB]/60" />
 
         {/* NAV */}
         <nav className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-5 py-4">
