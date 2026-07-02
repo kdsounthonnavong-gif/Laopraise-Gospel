@@ -60,7 +60,8 @@ export default async function HomePage({
           alt="Laopraise"
           fill
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover"
+          style={{ objectPosition: 'center 65%' }}
           priority
         />
         <div className="absolute inset-0" style={{background:'linear-gradient(to bottom,rgba(255,255,255,0.08) 0%,transparent 20%,transparent 87%,rgba(248,252,255,0.55) 94%,#F8FAFB 100%)'}} />
